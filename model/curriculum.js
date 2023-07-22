@@ -11,7 +11,7 @@ const CurriculumSchema = mongoose.Schema({
       },
         institution:{
             type:String,
-            required:true
+          
           },
           category: {
             type: String,
@@ -24,7 +24,7 @@ const CurriculumSchema = mongoose.Schema({
                },
                admin_upload_url: {
                 type: String,
-                required: true,
+                
                
               },
                 
