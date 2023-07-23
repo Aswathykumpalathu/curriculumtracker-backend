@@ -34,9 +34,10 @@ const CurriculumSchema = mongoose.Schema({
 
               faculty_upload_url: {
                 type: String,
-            
-               
-              }   
+              },
+              status:{
+                type:String
+              }  
                      
   
     

@@ -21,8 +21,8 @@ router.get('/curriculumlist/:id',async(req,res)=>{
 router.post('/curriculumlist',async(req,res)=>{
     try {
         console.log(req.body)
-        const { requirementname, area, institution ,category, hours, admin_upload_url} = req.body;
-        const curriculum = await curriculumDATA({ requirementname, area, institution ,category, hours, admin_upload_url});
+        const { requirementname, area, institution ,category, hours, admin_upload_url ,status} = req.body;
+        const curriculum = await curriculumDATA({ requirementname, area, institution ,category, hours, admin_upload_url ,status});
         curriculum.save()  ;
         res.json({message:"Created Succesfully"});
         // jwt.verify(req.body.token,"ict",(error,decoded)=>{
