@@ -25,19 +25,19 @@ router.get('/userlist/',async(req,res)=>{
     }
 })
 router.post("/login",async (req,res)=>{
-    let username = req.body.username;
+    let email = req.body.email;
     let password = req.body.password;
     console.log('password+++++++++')
     console.log(password)
-    console.log(username)
-    const user = await UserDATA.findOne({username:username});
+    console.log(email)
+    const user = await UserDATA.findOne({email:email});
     console.log(user)
     if(!user){
         res.json({message:"user not found"})
     }
     try {
         if(user.password ==password){
-            jwt.sign({email:username,id:user._id},"ict",{expiresIn:'1d'},(error,token)=>{
+            jwt.sign({email:email,id:user._id},"ict",{expiresIn:'1d'},(error,token)=>{
                 if (error) {
                     res.json({message:"Token not generated"})
                 } else {
