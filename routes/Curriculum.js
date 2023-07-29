@@ -64,7 +64,19 @@ router.delete('/curriculumlist/:id',async(req,res)=>{
         res.send('error')
     }
 })
-
+router.put('/curriculumlist/approve/:id',async(req,res)=>{
+    try {
+        console.log('api update approve')
+        let id = req.params.id
+       const updated = await curriculumDATA.findById(id)
+       updated.status = 'Approve'
+       updated.save()
+       res.json({message:"Approved"})
+    } catch (error) {
+        console.log(error)
+        res.send('error')
+    }
+})
 router.post('/curriculum/search',async (req,res) => {
     // console.log('api hitted')
     // const searchQuery = req.body.query;
