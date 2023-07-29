@@ -64,17 +64,37 @@ router.delete('/curriculumlist/:id',async(req,res)=>{
         res.send('error')
     }
 })
+
 router.post('/curriculum/search',async (req,res) => {
-   console.log("api");
+    // console.log('api hitted')
+    // const searchQuery = req.body.query;
+    // console.log('testing')
+    // // console.log(searchQuery)
+    // const filter = {
+    //   $or: [
+    //     { requirementname: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
+    //     { area: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
+    //     { institution: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
+    //     { category: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
+    //     // Add more fields to search here
+    //   ],
+    // };
+
+    // console.log('filter:', filter);
+
+    // const result = await curriculumDATA.find(filter);
+    // console.log('response:', result);
+
+    // res.json(result);
     try {
         const searchQuery = req.body.query;
-    
+        console.log(searchQuery)
         const filter = {
           $or: [
-            { requirementname: { $regex: '.' + searchQuery + '.', $options: 'i' } },
-            { area: { $regex: '.' + searchQuery + '.', $options: 'i' } },
-            { institution: { $regex: '.' + searchQuery + '.', $options: 'i' } },
-            { category: { $regex: '.' + searchQuery + '.', $options: 'i' } },
+            { requirementname: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
+            { area: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
+            { institution: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
+            { category: { $regex: '.*' + searchQuery + '.*', $options: 'i' } },
             // Add more fields to search here
           ],
         };
@@ -91,4 +111,5 @@ router.post('/curriculum/search',async (req,res) => {
       }
     
 })
+
 module.exports = router
