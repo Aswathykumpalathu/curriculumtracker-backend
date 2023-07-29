@@ -21,8 +21,8 @@ router.get('/curriculumlist/:id',async(req,res)=>{
 router.post('/curriculumlist',async(req,res)=>{
     try {
         console.log(req.body)
-        const { requirementname, area, institution ,category, hours, admin_upload_url ,status} = req.body;
-        const curriculum = await curriculumDATA({ requirementname, area, institution ,category, hours, admin_upload_url ,status});
+        const { requirementname, area, institution ,category, hours, admin_upload_url ,faculty_comments, faculty_upload_url,status} = req.body;
+        const curriculum = await curriculumDATA({ requirementname, area, institution ,category, hours, admin_upload_url ,faculty_comments, faculty_upload_url,status});
         curriculum.save()  ;
         res.json({message:"Created Succesfully"});
         // jwt.verify(req.body.token,"ict",(error,decoded)=>{
@@ -111,5 +111,15 @@ router.post('/curriculum/search',async (req,res) => {
       }
     
 })
-
+router.post('/curriculumlist/response/:id',async(req,res)=>{
+    try {
+       id = req.params.id
+       let updateData = {$set:req.body}
+       const updated = await curriculumDATA.findByIdAndUpdate(id, updateData)
+        res.json({message:"Updated successfully"})
+    } catch (error) {
+        // console.log(error)
+        res.send('error')
+    }
+})
 module.exports = router
