@@ -18,25 +18,25 @@ router.get('/curriculumlist/:id',async(req,res)=>{
         res.send(error.message)
     }
 })
-router.post('/curriculumlist',async(req,res)=>{
+router.post('/curriculumlist', (req,res)=>{
     try {
         console.log(req.body)
         const { requirementname, area, institution ,category, hours, admin_upload_url ,faculty_comments, faculty_upload_url,status} = req.body;
-        const curriculum = await curriculumDATA({ requirementname, area, institution ,category, hours, admin_upload_url ,faculty_comments, faculty_upload_url,status});
-        curriculum.save()  ;
-        res.json({message:"Created Succesfully"});
-        // jwt.verify(req.body.token,"ict",(error,decoded)=>{
-        //     if (decoded && decoded.email) {
+        const curriculum =  curriculumDATA({ requirementname, area, institution ,category, hours, admin_upload_url ,faculty_comments, faculty_upload_url,status});
+        // curriculum.save()  ;
+        // res.json({message:"Created Succesfully"});
+        jwt.verify(req.body.token,"ict",(error,decoded)=>{
+            if (decoded && decoded.email) {
                 
-        //         curriculum.save()  ;
-        //         res.json({message:"Created Succesfully"});
+                curriculum.save()  ;
+                res.json({message:"Created Succesfully"});
                 
-        //     } else {
-        //         res.json({message:"Unauthorised User"});
+            } else {
+                res.json({message:"Unauthorised User"});
                 
-        //     }
+            }
     
-        //    })
+           })
         
     } catch (error) {
         console.log(error)
