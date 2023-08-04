@@ -2,9 +2,29 @@ const router = require('express').Router();
 const jwt =require("jsonwebtoken");
 const curriculumDATA = require('../model/curriculum')
 router.get('/curriculumlist',async(req,res)=>{
+ const userToken = req.query.userToken;
+  console.log(userToken);
     try {
-        let data = await curriculumDATA.find()
-        res.send(data)
+        jwt.verify(userToken,"ict",(error,decoded)=>{
+            if (decoded && decoded.email) {
+                console.log('authorisexd')
+                curriculumDATA.find().then(data => {
+                    console.log(data);
+                    res.send(data);
+                  }).catch(error => {
+                    console.error(error);
+                    res.status(500).send("Internal Server Error");
+                  });
+              
+                
+            } else {
+                console.log('unauth not sending dat')
+                res.json({message:"Unauthorised User"});
+                
+            }
+    
+           })
+       
     } catch (error) {
         res.send(error.message)
     }
@@ -12,6 +32,7 @@ router.get('/curriculumlist',async(req,res)=>{
 router.get('/curriculumlist/:id',async(req,res)=>{
     try {
         let id = req.params.id
+
         let data = await curriculumDATA.findById(id)
         res.send(data)
     } catch (error) {
