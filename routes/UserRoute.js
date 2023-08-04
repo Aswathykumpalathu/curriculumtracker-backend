@@ -61,9 +61,17 @@ router.post('/user',async(req,res)=>{
     try {
         console.log(req.body)
         let item = req.body;
-        const user = await UserDATA(item);
+        console.log(req.body.email)
+        let email=req.body.email
+        if ( UserDATA.findOne({email:email})) {
+            res.json({message:"User Already exists,Please try with other email Id"})
+        } else {
+            console.log('saved')
+            const user = await UserDATA(item);
         user.save()  
         res.json({message:"Registered Succesfully"})
+        }
+        
     } catch (error) {
         console.log(error)
         res.json('error')
