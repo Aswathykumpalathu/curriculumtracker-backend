@@ -57,26 +57,50 @@ router.post("/login",async (req,res)=>{
 })
 
 
-router.post('/user',async(req,res)=>{
-    try {
-        console.log(req.body)
-        let item = req.body;
-        console.log(req.body.email)
-        let email=req.body.email
-        if ( UserDATA.findOne({email:email})) {
-            res.json({message:"User Already exists,Please try with other email Id"})
-        } else {
-            console.log('saved')
-            const user = await UserDATA(item);
-        user.save()  
-        res.json({message:"Registered Succesfully"})
-        }
+// router.post('/user',async(req,res)=>{
+//     try {
+//         console.log(req.body)
+//         let item = req.body;
+//         console.log(req.body.email)
+//         let email=req.body.email
+//         if ( UserDATA.findOne({email:email})) {
+//             res.json({message:"User Already exists,Please try with other email Id"})
+//         } else {
+//             console.log('saved')
+//             const user = await UserDATA(item);
+//         user.save()  
+//         res.json({message:"Registered Succesfully"})
+//         }
         
+//     } catch (error) {
+//         console.log(error)
+//         res.json('error')
+//     }
+// })
+router.post('/user', async (req, res) => {
+    try {
+        console.log(req.body);
+        let item = req.body;
+        console.log(req.body.email);
+        let email = req.body.email;
+        
+        // Ensure you await the findOne operation
+        let existingUser = await UserDATA.findOne({ email: email });
+
+        // Check if the existingUser is found
+        if (existingUser) {
+            res.json({ message: "User Already exists, Please try with another email Id" });
+        } else {
+            console.log('saved');
+            const user = new UserDATA(item); // Note: Ensure you use `new` to create a new instance
+            await user.save();  
+            res.json({ message: "Registered Successfully" });
+        }
     } catch (error) {
-        console.log(error)
-        res.json('error')
+        console.error("Error in user registration:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-})
+});
 
 
 module.exports = router
